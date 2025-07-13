@@ -1,0 +1,196 @@
+$keys-color-front: #6C6C6C;
+$keys-color-sides: #AEAEAE;
+$keys-color-up: #CBCBCB;
+$animation-delay: 2s;
+$click-time: 0.5s;
+
+html {
+    margin: 0;
+    height: 100%;
+    background: radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+body {
+    margin: 2%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+// DESCRIPTION
+
+#description {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
+}
+
+// SCREEN
+
+#screen {
+    width: 40%;
+    height: 40vh;
+    margin-top: 20px;
+    background-color: #1a1a1a;
+    border: 40px solid $keys-color-up;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    position: relative;
+}
+
+#screen::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.letter {
+    font-size: 10vh;
+    font-weight: bolder;
+    color: #104710;
+    font-family: monospace;
+
+    opacity: 0;
+}
+
+// letters animation
+
+#C-letter {
+    animation: write 0.1s forwards;
+    animation-delay: $animation-delay + 0 * $click-time + 0.3s;
+}
+
+#I-letter {
+    animation: write 0.1s forwards;
+    animation-delay: $animation-delay + 1 * $click-time + 0.3s;
+}
+
+#A-letter {
+    animation: write 0.1s forwards;
+    animation-delay: $animation-delay + 2 * $click-time + 0.3s;
+}
+
+#O-letter {
+    animation: write 0.1s forwards;
+    animation-delay: $animation-delay + 3 * $click-time + 0.3s;
+}
+
+@keyframes write {
+    to {
+        opacity: 1;
+    }
+}
+
+// KEYBOARD
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    top: -40px;
+}
+
+.keyboard-row {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+
+    position: relative;
+    &:nth-of-type(1) {
+        top: 50px;
+    }
+    &:last-of-type {
+        top: -50px;
+    }
+}
+
+// KEY
+
+.key {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.face {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    height: 64px;
+}
+
+.front {
+    width: 66px;
+    background-color: $keys-color-front;
+}
+
+.up {
+    width: 64px;
+    background-color: $keys-color-up;
+    transform: 
+        perspective(900px)
+        rotateX(60deg);
+    position: relative;
+    top: 16px;
+}
+
+// click animation
+
+#C-key {
+    animation: click $click-time;
+    animation-delay: $animation-delay + 0 * $click-time + 0.2s;
+}
+
+#I-key {
+    animation: click $click-time;
+    animation-delay: $animation-delay + 1 * $click-time + 0.2s;
+}
+
+#A-key {
+    animation: click $click-time;
+    animation-delay: $animation-delay + 2 * $click-time + 0.2s;
+}
+
+#O-key {
+    animation: click $click-time;
+    animation-delay: $animation-delay + 3 * $click-time + 0.2s;
+}
+
+@keyframes click {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(15px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

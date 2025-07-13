@@ -1,0 +1,220 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    height: 100%;
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+body {
+    margin: 2%;
+}
+
+// DESCRIPTION
+
+header {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
+    text-align: center;
+}
+
+// MAIN
+
+main {
+    display: grid;
+    grid-template-columns: 30%;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+// Typewriter
+
+#typewriter {
+
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: rgb(245, 232, 159);
+    box-sizing: border-box;
+
+    p {
+        margin: 0;
+        color: rgb(59, 59, 59);
+        font-family: 'courier';
+        font-size: 1.5rem;
+
+        margin-inline: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 1px solid;
+        animation: typing 3s steps(21) forwards,
+            cursor-blink 1s step-end infinite;
+    }
+
+    @keyframes typing {
+        from { max-width: 0; }
+        to { max-width: 100%; }
+    }
+
+    @keyframes cursor-blink {
+        50% { border-color: transparent; }
+    }
+
+}
+
+// Accordion
+
+#accordion {
+
+    background-color: rgb(144, 199, 199);
+    padding: 10px;
+    border-radius: 8px;
+
+    details {
+        padding: 8px;
+        background-color: rgb(89, 194, 194);
+        border-radius: 8px;
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        summary {
+            padding: 10px;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+
+            &::after {
+                content: '';
+                border-top: 12px solid #000;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                transition: 0.2s;
+            }
+        }
+
+        &[open]>summary::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 10px;
+            background-color: rgb(144, 199, 199);
+            border-radius: 8px;
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+}
+
+// Dialog
+
+#dialog {
+    background-color: rgb(226, 168, 128);
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    #toggle-label {
+        border: 1px solid #000;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #ffffff83;
+        width: 100%;
+        text-align: center;
+    }
+
+    #dialog-toggle {
+
+        display: none;
+
+        &:checked + #toggle-label + dialog {
+            position: absolute;
+            top: 103%;
+            left: 0;
+            width: 80%;
+            display: flex;
+            background-color: rgb(228, 181, 150);
+            border-radius: 8px;
+            border: 1px solid #000;
+            z-index: 999;
+        }
+    }
+}
+
+// Modal
+
+#modal {
+    background-color: rgb(138, 128, 226);
+    padding: 10px;
+    margin: 0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    #modal-label {
+        border: 1px solid #000;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #ffffff83;
+        width: 100%;
+        text-align: center;
+    }
+
+    #modal-toggle {
+
+        display: none;
+
+        &:checked + #modal-label + dialog {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            display: flex;
+            border-style: none;
+            background-color: #00000049;
+
+            .close {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                cursor: default;
+            }
+
+            #modal-inner {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgb(170, 164, 226);
+                border-radius: 8px;
+                border: 1px solid #000;
+                width: 50%;
+                height: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+    }
+}

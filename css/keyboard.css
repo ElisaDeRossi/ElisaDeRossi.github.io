@@ -1,0 +1,169 @@
+html {
+  margin: 0;
+  height: 100%;
+  background: radial-gradient(circle, rgb(238, 174, 202) 0%, rgb(148, 187, 233) 100%);
+}
+
+body {
+  margin: 2%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#description {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-weight: 900;
+}
+
+#screen {
+  width: 40%;
+  height: 40vh;
+  margin-top: 20px;
+  background-color: #1a1a1a;
+  border: 40px solid #CBCBCB;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+#screen::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.letter {
+  font-size: 10vh;
+  font-weight: bolder;
+  color: #104710;
+  font-family: monospace;
+  opacity: 0;
+}
+
+#C-letter {
+  animation: write 0.1s forwards;
+  animation-delay: 2.3s;
+}
+
+#I-letter {
+  animation: write 0.1s forwards;
+  animation-delay: 2.8s;
+}
+
+#A-letter {
+  animation: write 0.1s forwards;
+  animation-delay: 3.3s;
+}
+
+#O-letter {
+  animation: write 0.1s forwards;
+  animation-delay: 3.8s;
+}
+
+@keyframes write {
+  to {
+    opacity: 1;
+  }
+}
+#keyboard {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -40px;
+}
+
+.keyboard-row {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+}
+.keyboard-row:nth-of-type(1) {
+  top: 50px;
+}
+.keyboard-row:last-of-type {
+  top: -50px;
+}
+
+.key {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.face {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  height: 64px;
+}
+
+.front {
+  width: 66px;
+  background-color: #6C6C6C;
+}
+
+.up {
+  width: 64px;
+  background-color: #CBCBCB;
+  transform: perspective(900px) rotateX(60deg);
+  position: relative;
+  top: 16px;
+}
+
+#C-key {
+  animation: click 0.5s;
+  animation-delay: 2.2s;
+}
+
+#I-key {
+  animation: click 0.5s;
+  animation-delay: 2.7s;
+}
+
+#A-key {
+  animation: click 0.5s;
+  animation-delay: 3.2s;
+}
+
+#O-key {
+  animation: click 0.5s;
+  animation-delay: 3.7s;
+}
+
+@keyframes click {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}/*# sourceMappingURL=keyboard.css.map */

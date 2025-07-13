@@ -1,0 +1,335 @@
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Verdana, sans-serif;
+  background-color: #F2FFFE;
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0;
+  margin: 0 15%;
+  position: relative;
+}
+
+header {
+  position: sticky;
+  top: 0;
+}
+header nav {
+  background-color: #F2FFFE;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border-bottom: 1px solid #464D4A;
+  gap: 0.7rem;
+}
+@media screen and (max-width: 1188px) {
+  header nav {
+    padding: 1rem;
+    position: relative;
+  }
+}
+header nav .nav-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+@media screen and (max-width: 1188px) {
+  header nav .nav-links {
+    padding: 0.3rem;
+    flex-direction: column;
+    width: 100%;
+    background-color: #F2FFFE;
+    display: none;
+  }
+  header nav .nav-links:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+  }
+}
+header nav .nav-links .navbar-item {
+  height: 100%;
+  margin: 0.7rem 0;
+  padding: 0.7rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #464D4A;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+@media screen and (max-width: 1188px) {
+  header nav .nav-links .navbar-item {
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
+header nav .nav-links .navbar-item:hover {
+  background-color: #C3FFF6;
+}
+header nav .nav-links .navbar-item svg {
+  width: 1.5rem;
+  transition: transform 0.3s ease-out;
+}
+header nav .nav-links .navbar-item:hover svg {
+  width: 1.5rem;
+  transform: rotate(180deg);
+}
+header nav #menu-toggle {
+  display: none;
+}
+header nav #menu-icon {
+  display: none;
+}
+@media screen and (max-width: 1188px) {
+  header nav #menu-icon {
+    display: block;
+  }
+}
+@media screen and (max-width: 1188px) {
+  header nav #menu-toggle:checked + #menu-icon + .nav-links {
+    display: flex;
+  }
+}
+
+.button {
+  color: #464D4A;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: #34EBB1;
+}
+.button:hover {
+  background-color: #94FCE7;
+}
+
+#dropdown-link {
+  position: relative;
+}
+#dropdown-link #dropdown-link-menu {
+  border: 1px solid #464D4A;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  top: 4rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: none;
+  background-color: #ffffff;
+}
+@media screen and (max-width: 1188px) {
+  #dropdown-link #dropdown-link-menu {
+    top: 3rem;
+  }
+}
+#dropdown-link:hover #dropdown-link-menu {
+  display: block;
+}
+
+.dropdown-link-menu-item {
+  padding: 0.7rem;
+  color: #464D4A;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-link-menu-item:hover {
+  background-color: #C3FFF6;
+}
+
+#content-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+#content-wrapper aside {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  min-width: 9rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+  background-color: #C3FFF6;
+  padding: 1.5rem 1rem;
+}
+@media screen and (max-width: 1188px) {
+  #content-wrapper aside {
+    min-width: 1rem;
+    align-items: center;
+  }
+}
+#content-wrapper aside a {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  text-decoration: none;
+  color: #464D4A;
+}
+#content-wrapper aside a svg {
+  fill: #464D4A;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+#content-wrapper aside a p {
+  margin: 0;
+}
+@media screen and (max-width: 1188px) {
+  #content-wrapper aside a p {
+    display: none;
+  }
+}
+#content-wrapper main {
+  flex-grow: 1;
+}
+#content-wrapper main article h1,
+#content-wrapper main article h2,
+#content-wrapper main article h3,
+#content-wrapper main article h4,
+#content-wrapper main article h5,
+#content-wrapper main article h6 {
+  color: #34EBB1;
+  text-align: center;
+}
+#content-wrapper main article p {
+  color: #464D4A;
+}
+#content-wrapper main article figure {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  width: 20%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  background-color: #C3FFF6;
+}
+@media screen and (max-width: 1188px) {
+  #content-wrapper main article figure {
+    width: auto;
+    max-height: 100vh;
+  }
+}
+#content-wrapper main article figure img {
+  width: 100%;
+}
+#content-wrapper main article figure figcaption {
+  margin: 0.5rem 0 0 0;
+  font-size: small;
+}
+#content-wrapper main article .img-left {
+  float: left;
+}
+@media screen and (max-width: 1188px) {
+  #content-wrapper main article .img-left {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+#content-wrapper main article .img-right {
+  float: right;
+}
+@media screen and (max-width: 1188px) {
+  #content-wrapper main article .img-right {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+#content-wrapper main article .cover {
+  width: 100%;
+  height: 9rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+footer {
+  background-color: #C3FFF6;
+  color: #464D4A;
+  font-size: x-small;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+}
+footer #footer-links {
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+}
+footer #footer-links div {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: space-evenly;
+  justify-content: flex-start;
+  gap: 0;
+}
+footer #footer-links div h4 {
+  margin: 0.5rem 0.5rem;
+}
+footer #footer-links div a {
+  margin: 0.5rem 0;
+  text-decoration: none;
+  color: #464D4A;
+}
+footer p {
+  margin: 1rem 0 0 0;
+}
+
+hr {
+  width: 100%;
+  border-color: #94FCE7;
+}
+
+#to-top {
+  position: sticky;
+  bottom: 3rem;
+  margin-right: 3rem;
+  float: right;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+#to-top a {
+  background-color: #34EBB1;
+  padding: 1rem;
+  border-radius: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+#to-top a svg {
+  fill: #464D4A;
+}/*# sourceMappingURL=general.css.map */
