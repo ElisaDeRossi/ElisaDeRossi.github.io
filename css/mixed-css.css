@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  margin: 2%;
+  margin: 5px;
 }
 
 header {
@@ -20,10 +20,15 @@ header {
 
 main {
   display: grid;
-  grid-template-columns: 30%;
+  grid-template-columns: 50%;
   justify-content: center;
   gap: 10px;
   margin-top: 10px;
+}
+@media screen and (max-width: 1188px) {
+  main {
+    grid-template-columns: 100%;
+  }
 }
 
 #typewriter {
@@ -131,6 +136,11 @@ main {
   border: 1px solid #000;
   z-index: 999;
 }
+@media screen and (max-width: 1188px) {
+  #dialog #dialog-toggle:checked + #toggle-label + dialog {
+    width: 100%;
+  }
+}
 
 #modal {
   background-color: rgb(138, 128, 226);
@@ -186,4 +196,10 @@ main {
   align-items: center;
   text-align: center;
   padding: 10px;
+}
+@media screen and (max-width: 1188px) {
+  #modal #modal-toggle:checked + #modal-label + dialog #modal-inner {
+    width: 90%;
+    height: 90%;
+  }
 }/*# sourceMappingURL=mixed-css.css.map */

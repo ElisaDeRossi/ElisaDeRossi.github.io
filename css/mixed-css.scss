@@ -1,3 +1,5 @@
+$mobile-limit: 1188px;
+
 * {
     box-sizing: border-box;
 }
@@ -9,7 +11,7 @@ html {
 }
 
 body {
-    margin: 2%;
+    margin: 5px;
 }
 
 // DESCRIPTION
@@ -24,7 +26,11 @@ header {
 
 main {
     display: grid;
-    grid-template-columns: 30%;
+    grid-template-columns: 50%;
+    @media screen and (max-width: $mobile-limit) {
+        grid-template-columns: 100%;
+    }
+
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
@@ -146,6 +152,9 @@ main {
             top: 103%;
             left: 0;
             width: 80%;
+            @media screen and (max-width: $mobile-limit) {
+                width: 100%;
+            }
             display: flex;
             background-color: rgb(228, 181, 150);
             border-radius: 8px;
@@ -209,6 +218,10 @@ main {
                 border: 1px solid #000;
                 width: 50%;
                 height: 50%;
+                @media screen and (max-width: $mobile-limit) {
+                    width: 90%;
+                    height: 90%;
+                }
                 display: flex;
                 justify-content: center;
                 align-items: center;
