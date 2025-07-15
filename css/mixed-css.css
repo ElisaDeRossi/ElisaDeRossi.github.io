@@ -4,12 +4,19 @@
 
 html {
   margin: 0;
+  padding: 10px;
   height: 100%;
   background: radial-gradient(circle, rgb(238, 174, 202) 0%, rgb(148, 187, 233) 100%);
 }
 
 body {
   margin: 5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  padding: 10px;
+  margin: 0;
 }
 
 header {
@@ -20,10 +27,10 @@ header {
 
 main {
   display: grid;
-  grid-template-columns: 50%;
+  grid-template-columns: 33.3333333333% 33.3333333333% 33.3333333333%;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  margin: 10px;
 }
 @media screen and (max-width: 1188px) {
   main {
@@ -32,14 +39,18 @@ main {
 }
 
 #typewriter {
-  padding: 30px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   border-radius: 8px;
   background-color: rgb(245, 232, 159);
   box-sizing: border-box;
 }
-#typewriter p {
+#typewriter .wrapper {
+  padding: 20px;
+}
+#typewriter .wrapper p {
   margin: 0;
   color: rgb(59, 59, 59);
   font-family: "courier";
@@ -68,8 +79,13 @@ main {
   background-color: rgb(144, 199, 199);
   padding: 10px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 #accordion details {
+  width: 100%;
   padding: 8px;
   background-color: rgb(89, 194, 194);
   border-radius: 8px;
@@ -109,7 +125,7 @@ main {
   padding: 10px;
   border-radius: 8px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -148,7 +164,7 @@ main {
   margin: 0;
   border-radius: 8px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -199,7 +215,70 @@ main {
 }
 @media screen and (max-width: 1188px) {
   #modal #modal-toggle:checked + #modal-label + dialog #modal-inner {
-    width: 90%;
-    height: 90%;
+    width: 70%;
+    height: 70%;
   }
+}
+
+#editable-content {
+  background-color: rgb(226, 128, 197);
+  padding: 10px;
+  margin: 0;
+  border-radius: 8px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#editable-content ol {
+  width: 100%;
+  align-self: start;
+  margin: 0;
+  padding: 20px 40px;
+  border-radius: 8px;
+  background-color: rgb(230, 159, 208);
+}
+
+#autocomplete {
+  background-color: rgb(147, 226, 128);
+  padding: 10px;
+  margin: 0;
+  border-radius: 8px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#autocomplete input {
+  font-family: inherit;
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: rgb(170, 228, 156);
+  border: 1px solid #000;
+}
+#autocomplete datalist option {
+  font-family: inherit;
+}
+
+#grouping-options {
+  background-color: rgb(226, 128, 128);
+  padding: 10px;
+  margin: 0;
+  border-radius: 8px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#grouping-options select {
+  font-family: inherit;
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: rgb(231, 185, 185);
+  border: 1px solid #000;
 }/*# sourceMappingURL=mixed-css.css.map */

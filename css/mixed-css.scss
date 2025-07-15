@@ -6,12 +6,19 @@ $mobile-limit: 1188px;
 
 html {
     margin: 0;
+    padding: 10px;
     height: 100%;
     background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
 body {
     margin: 5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 10px;
+    margin: 0;
 }
 
 // DESCRIPTION
@@ -26,48 +33,55 @@ header {
 
 main {
     display: grid;
-    grid-template-columns: 50%;
+    grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
     @media screen and (max-width: $mobile-limit) {
         grid-template-columns: 100%;
     }
 
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
+    margin: 10px;
 }
 
 // Typewriter
 
 #typewriter {
 
-    padding: 30px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     border-radius: 8px;
     background-color: rgb(245, 232, 159);
     box-sizing: border-box;
 
-    p {
-        margin: 0;
-        color: rgb(59, 59, 59);
-        font-family: 'courier';
-        font-size: 1.5rem;
+    .wrapper {
 
-        margin-inline: auto;
-        overflow: hidden;
-        white-space: nowrap;
-        border-right: 1px solid;
-        animation: typing 3s steps(21) forwards,
-            cursor-blink 1s step-end infinite;
-    }
+        padding: 20px;
 
-    @keyframes typing {
-        from { max-width: 0; }
-        to { max-width: 100%; }
-    }
+        p {
+            margin: 0;
+            color: rgb(59, 59, 59);
+            font-family: 'courier';
+            font-size: 1.5rem;
 
-    @keyframes cursor-blink {
-        50% { border-color: transparent; }
+            margin-inline: auto;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 1px solid;
+            animation: typing 3s steps(21) forwards,
+                cursor-blink 1s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { max-width: 0; }
+            to { max-width: 100%; }
+        }
+
+        @keyframes cursor-blink {
+            50% { border-color: transparent; }
+        }
+
     }
 
 }
@@ -79,8 +93,13 @@ main {
     background-color: rgb(144, 199, 199);
     padding: 10px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     details {
+        width: 100%;
         padding: 8px;
         background-color: rgb(89, 194, 194);
         border-radius: 8px;
@@ -129,7 +148,7 @@ main {
     padding: 10px;
     border-radius: 8px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -172,7 +191,7 @@ main {
     margin: 0;
     border-radius: 8px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -219,8 +238,8 @@ main {
                 width: 50%;
                 height: 50%;
                 @media screen and (max-width: $mobile-limit) {
-                    width: 90%;
-                    height: 90%;
+                    width: 70%;
+                    height: 70%;
                 }
                 display: flex;
                 justify-content: center;
@@ -229,5 +248,78 @@ main {
                 padding: 10px;
             }
         }
+    }
+}
+
+// Editable content
+
+#editable-content {
+    background-color: rgb(226, 128, 197);
+    padding: 10px;
+    margin: 0;
+    border-radius: 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    ol {
+        width: 100%;
+        align-self: start;
+        margin: 0;
+        padding: 20px 40px;
+        border-radius: 8px;
+        background-color: rgb(230, 159, 208);
+    }
+}
+
+// Input field with options
+
+#autocomplete {
+    background-color: rgb(147, 226, 128);
+    padding: 10px;
+    margin: 0;
+    border-radius: 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    input {
+        font-family: inherit;
+        width: 100%;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: rgb(170, 228, 156);
+        border: 1px solid #000;
+    }
+
+    datalist option{
+        font-family: inherit;
+    }
+}
+
+// Grouping options
+
+#grouping-options {
+    background-color: rgb(226, 128, 128);
+    padding: 10px;
+    margin: 0;
+    border-radius: 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    select {
+        font-family: inherit;
+        width: 100%;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: rgb(231, 185, 185);
+        border: 1px solid #000;
     }
 }

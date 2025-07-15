@@ -13,10 +13,16 @@
     </header>
     <main>
         <div id="typewriter">
-            <p>CSS typewriter effect</p>
+            <h3>This is the typewriter effect:</h3>
+
+            <div class="wrapper">
+                <p>CSS typewriter effect</p>
+            </div>
         </div>
 
         <div id="accordion">
+            <h3>This is an accordion:</h3>
+
             <details>
                 <summary>Question 1</summary>
                 <div class="accordion-content">
@@ -40,18 +46,57 @@
         </div>
 
         <div id="dialog">
+            <h3>This is the toggle for a dialog:</h3>
             <input type="checkbox" id="dialog-toggle">
             <label for="dialog-toggle" id="toggle-label">Toggle dialog</label>
             <dialog>This is a dialog. It could contain other things.</dialog>
         </div>
 
         <div id="modal">
+            <h3>This is the toggle for a modal:</h3>
             <input type="checkbox" id="modal-toggle">
             <label for="modal-toggle" id="modal-label">Toggle modal</label>
             <dialog>
                 <a href="" class="close"></a>
                 <div id="modal-inner">This is a modal. It could contain other things.</div>
             </dialog>
+        </div>
+
+        <div id="editable-content">
+            <h3>This is an editable list:</h3>
+            <ol contenteditable="true">
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+                <li>Item 5</li>
+                <li>Item 6</li>
+            </ol>
+        </div>
+
+        <div id="autocomplete">
+            <h3>This is an input field with options:</h3>
+            <input type="text" list="list" placeholder="Write something">
+            <datalist id="list">
+                <option value="option1"></option>
+                <option value="option2"></option>
+                <option value="option3"></option>
+                <option value="option4"></option>
+            </datalist>
+        </div>
+
+        <div id="grouping-options">
+            <h3>This is an options list with groups:</h3>
+            <select>
+                <optgroup label="groupA">
+                    <option>option1</option>
+                    <option>option2</option>
+                </optgroup>
+                <optgroup label="groupB">
+                    <option>option3</option>
+                    <option>option4</option>
+                </optgroup>
+            </select>
         </div>
     </main>
 
