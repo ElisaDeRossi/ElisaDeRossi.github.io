@@ -153,32 +153,37 @@ main {
     align-items: center;
     position: relative;
 
-    #toggle-label {
-        border: 1px solid #000;
-        border-radius: 8px;
-        padding: 10px;
-        background-color: #ffffff83;
+    .wrapper {
+
+        position: relative;
+        height: auto;
         width: 100%;
-        text-align: center;
-    }
 
-    #dialog-toggle {
-
-        display: none;
-
-        &:checked + #toggle-label + dialog {
-            position: absolute;
-            top: 103%;
-            left: 0;
-            width: 80%;
-            @media screen and (max-width: $mobile-limit) {
-                width: 100%;
-            }
-            display: flex;
-            background-color: rgb(228, 181, 150);
-            border-radius: 8px;
+        #toggle-label {
             border: 1px solid #000;
-            z-index: 999;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #ffffff83;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #dialog-toggle {
+
+            display: none;
+
+            &:checked + #toggle-label + dialog {
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 0;
+                width: 100%;
+                display: flex;
+                background-color: rgb(228, 181, 150);
+                border-radius: 8px;
+                border: 1px solid #000;
+                z-index: 999;
+            }
         }
     }
 }

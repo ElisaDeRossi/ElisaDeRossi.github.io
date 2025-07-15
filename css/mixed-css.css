@@ -130,32 +130,33 @@ main {
   align-items: center;
   position: relative;
 }
-#dialog #toggle-label {
+#dialog .wrapper {
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+#dialog .wrapper #toggle-label {
   border: 1px solid #000;
   border-radius: 8px;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.5137254902);
+  display: flex;
+  justify-content: center;
   width: 100%;
-  text-align: center;
 }
-#dialog #dialog-toggle {
+#dialog .wrapper #dialog-toggle {
   display: none;
 }
-#dialog #dialog-toggle:checked + #toggle-label + dialog {
+#dialog .wrapper #dialog-toggle:checked + #toggle-label + dialog {
   position: absolute;
-  top: 103%;
+  top: calc(100% + 10px);
   left: 0;
-  width: 80%;
+  width: 100%;
   display: flex;
   background-color: rgb(228, 181, 150);
   border-radius: 8px;
   border: 1px solid #000;
   z-index: 999;
-}
-@media screen and (max-width: 1188px) {
-  #dialog #dialog-toggle:checked + #toggle-label + dialog {
-    width: 100%;
-  }
 }
 
 #modal {
