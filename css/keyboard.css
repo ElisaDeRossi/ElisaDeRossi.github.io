@@ -27,7 +27,6 @@ body {
   border: 40px solid #CBCBCB;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   gap: 20px;

@@ -1,0 +1,34 @@
+html {
+    margin: 0;
+    height: 100%;
+    background: radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+body {
+    margin: 2%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+// DESCRIPTION
+
+#description {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
+}
+
+// CANVAS
+
+canvas {
+    width: 100%;
+    height: 60%;
+    border: 2px solid #000;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
