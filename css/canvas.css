@@ -12,11 +12,15 @@ body {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 #description {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: 900;
+}
+
+form {
+  margin: 20px 0;
 }
 
 canvas {
@@ -25,6 +29,5 @@ canvas {
       width: 100%;
   }*/
   outline: 2px solid #000;
-  margin-top: 20px;
   background-color: #fff;
 }/*# sourceMappingURL=canvas.css.map */
