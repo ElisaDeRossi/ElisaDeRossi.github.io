@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/canvas.css">
     <title>Canvas</title>
 </head>
+
 <body>
     <div id="description">
-        This is a TS test on drawing on a canvas.
+        This is a JS test on drawing on a canvas.
     </div>
 
     <form id="shapeType">
+        <label for="shapeType">Shape:</label>
         <label><input type="radio" name="shapeType" value="line" checked>Line</label>
         <label><input type="radio" name="shapeType" value="circle">Circle</label>
         <label><input type="radio" name="shapeType" value="ellipse">Ellipse</label>
@@ -19,7 +22,35 @@
         <label><input type="radio" name="shapeType" value="roundRect">Rounded Rectangle</label>
     </form>
 
+    <!--
+    <form id="maleHead">
+        <label for="maleHead">Add male head:</label>
+        <label>
+            <input type="radio" name="maleHead" value="front">
+            <img src="/img/canvas/front.png" style="width:50px" />
+        </label>
+        <label>
+            <input type="radio" name="maleHead" value="back">
+            <img src="/img/canvas/back.png" style="width:50px" />
+        </label>
+        <label>
+            <input type="radio" name="maleHead" value="side">
+            <img src="/img/canvas/side.png" style="width:50px" />
+        </label>
+        <label>
+            <input type="radio" name="maleHead" value="up"> 
+            <img src="/img/canvas/up.png" style="width:50px" />
+        </label>
+        <label>
+            <input type="radio" name="maleHead" value="back-up">
+            <img src="/img/canvas/back-up.png" style="width:50px" />
+        </label>
+    </form>
+    <img id="source" src="" style="display: none;" />
+    -->
+
     <canvas id="myCanvas" width="1000" height="500"></canvas>
     <script type="module" src="/js/canvas.js"></script>
 </body>
+
 </html>
