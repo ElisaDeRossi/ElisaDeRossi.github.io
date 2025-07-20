@@ -18,6 +18,128 @@ if (canvas) {
     let currentX, currentY;
     let shapeType = document.getElementById('shapeType').elements['shapeType'].value;
 
+    let mode = document.getElementById('mode');
+    mode.onchange = (event) => {
+      switch (mode.elements['mode'].value) {
+        case 'shape':
+
+          isDragging = false;
+
+          // Mouse down event
+          canvas.onmousedown = (event) => {
+            isDragging = true;
+            startX = event.clientX - rect.left;
+            startY = event.clientY - rect.top;
+            shapeType = document.getElementById('shapeType').elements['shapeType'].value;
+          };
+
+          // Mouse move event
+          canvas.onmousemove = (event) => {
+            if (isDragging) {
+              currentX = event.clientX - rect.left;
+              currentY = event.clientY - rect.top;
+
+              switch (shapeType) {
+                case 'circle':
+                  tempShape = new Circle([startX, startY], Math.sqrt((currentX - startX) ** 2 + (currentY - startY) ** 2));
+                  break;
+
+                case 'ellipse':
+                  tempShape = new Ellipse([startX, startY], [currentX, currentY], 0);
+                  break;
+
+                case 'rect':
+                  tempShape = new Rectangle([startX, startY], [currentX, currentY]);
+                  break;
+
+                case 'roundRect':
+                  tempShape = new RoundRectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]);
+                  break;
+
+                default: // default is line
+                  tempShape = new Line([startX, startY], [currentX, currentY]);
+                  break;
+              }
+            }
+          };
+
+          // Mouse up event
+          canvas.onmouseup = (event) => {
+            if (tempShape) {
+              tempShape = null;
+              if (startX !== currentX && startY !== currentY)
+                switch (shapeType) {
+                  case 'circle':
+                    shapeList.push(new Circle([startX, startY], Math.sqrt((currentX - startX) ** 2 + (currentY - startY) ** 2)));
+                    break;
+
+                  case 'ellipse':
+                    shapeList.push(new Ellipse([startX, startY], [currentX, currentY], 0));
+                    break;
+
+                  case 'rect':
+                    shapeList.push(new Rectangle([startX, startY], [currentX, currentY]));
+                    break;
+
+                  case 'roundRect':
+                    shapeList.push(new RoundRectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]));
+                    break;
+
+                  default: // default is line
+                    shapeList.push(new Line([startX, startY], [currentX, currentY]));
+                    break;
+                }
+            }
+
+            isDragging = false;
+          };
+
+          break;
+
+        case 'select':
+
+          isDragging = false;
+          let selected = false;
+
+          // Mouse down event
+          canvas.onmousedown = (event) => {
+            isDragging = true;
+          };
+
+          // Mouse move event
+          canvas.onmousemove = (event) => {
+            if (isDragging) { }
+          };
+
+          // Mouse up event
+          canvas.onmouseup = (event) => {
+            currentX = event.clientX - rect.left;
+            currentY = event.clientY - rect.top;
+
+            selected = false;
+            shapeList.forEach(shape => {
+              ctx.lineWidth = shape.lineWidth + 9;    // To allow some error in the detection
+              const isPointInStroke = ctx.isPointInStroke(shape.path, currentX, currentY);
+              ctx.lineWidth = shape.lineWidth;        // Restore original dimension
+              if (isPointInStroke && !selected) {
+                shape.isSelected = true;
+                console.log(shape);
+                selected = true;
+              }
+              else
+                shape.isSelected = false;
+            });
+
+            isDragging = false;
+          };
+
+          break;
+
+        default:
+          break;
+      }
+    };
+
     /*
     let image = new Image(document.getElementById('source'), [0, 0], [50, 50]);
     let maleHead = document.getElementById('maleHead').elements['maleHead'];
@@ -47,98 +169,6 @@ if (canvas) {
 
       requestAnimationFrame(drawEverything);
     }
-
-    // Mouse down event
-    canvas.addEventListener('mousedown', (event) => {
-      isDragging = true;
-      startX = event.clientX - rect.left;
-      startY = event.clientY - rect.top;
-      shapeType = document.getElementById('shapeType').elements['shapeType'].value;
-    });
-
-    // Mouse move event
-    canvas.addEventListener('mousemove', (event) => {
-      if (isDragging) {
-        currentX = event.clientX - rect.left;
-        currentY = event.clientY - rect.top;
-
-        switch (shapeType) {
-          case 'circle':
-            tempShape = new Circle([startX, startY], Math.sqrt((currentX - startX) ** 2 + (currentY - startY) ** 2));
-            break;
-
-          case 'ellipse':
-            tempShape = new Ellipse([startX, startY], [currentX, currentY], 0);
-            break;
-
-          case 'rect':
-            tempShape = new Rectangle([startX, startY], [currentX, currentY]);
-            break;
-
-          case 'roundRect':
-            tempShape = new RoundRectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]);
-            break;
-
-          default: // default is line
-            tempShape = new Line([startX, startY], [currentX, currentY]);
-            break;
-        }
-      }
-    });
-
-    // Mouse up event
-    canvas.addEventListener('mouseup', (event) => {
-      if (tempShape) {  // User is drawing
-        tempShape = null;
-        if (startX !== currentX && startY !== currentY)
-          switch (shapeType) {
-            case 'circle':
-              shapeList.push(new Circle([startX, startY], Math.sqrt((currentX - startX) ** 2 + (currentY - startY) ** 2)));
-              break;
-
-            case 'ellipse':
-              shapeList.push(new Ellipse([startX, startY], [currentX, currentY], 0));
-              break;
-
-            case 'rect':
-              shapeList.push(new Rectangle([startX, startY], [currentX, currentY]));
-              break;
-
-            case 'roundRect':
-              shapeList.push(new RoundRectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]));
-              break;
-
-            default: // default is line
-              shapeList.push(new Line([startX, startY], [currentX, currentY]));
-              break;
-          }
-      }
-      else  // User is selecting
-      {
-        currentX = event.clientX - rect.left;
-        currentY = event.clientY - rect.top;
-
-        let selected = false;
-        shapeList.forEach(shape => {
-          
-          ctx.lineWidth = shape.lineWidth + 9;   // To allow some error in the detection
-          const isPointInStroke = ctx.isPointInStroke(shape.path, currentX, currentY);
-          ctx.lineWidth = shape.lineWidth;
-
-          if (isPointInStroke && !selected) {
-            shape.isSelected = true;
-            console.log(shape);
-            selected = true;
-          }
-          else
-            shape.isSelected = false;
-
-        });
-      }
-
-      isDragging = false;
-    });
-
     drawEverything();
   }
 }

@@ -11,6 +11,33 @@ class Shape {
   }
 }
 
+class Anchor extends Shape {
+  constructor(type, center, radius) {
+    super("circle");
+
+    this.center = center;
+    this.radius = radius;
+
+    // Build shape
+    this.buildShape();
+  }
+
+  buildShape() {
+    this.path = new Path2D();
+    // ctx.arc(centerX, centerY, radius, begin, end)
+    this.path.arc(this.center[0], this.center[1], this.radius, 0, 2 * Math.PI);
+  }
+
+  draw(ctx) {
+    super.draw(ctx);
+  }
+
+  move(position) {
+    this.center = position;
+    this.buildShape();
+  }
+}
+
 export class Line extends Shape {
   constructor(start, end) {
     super("line");
@@ -19,12 +46,17 @@ export class Line extends Shape {
     this.end = end;
 
     // Build shape
-    this.path.moveTo(this.start[0], this.start[1]);
-    this.path.lineTo(this.end[0], this.end[1]);
+    this.buildShape();
 
     // Anchors
     this.anchorStart = new Anchor(this.start, 10);
     this.anchorEnd = new Anchor(this.end, 10);
+  }
+
+  buildShape() {
+    this.path = new Path2D();
+    this.path.moveTo(this.start[0], this.start[1]);
+    this.path.lineTo(this.end[0], this.end[1]);
   }
 
   draw(ctx) {
@@ -35,22 +67,13 @@ export class Line extends Shape {
       this.anchorEnd.draw(ctx);
     }
   }
-}
 
-class Anchor extends Shape {
-  constructor(center, radius) {
-    super("circle");
-
-    this.center = center;
-    this.radius = radius;
-
-    // Build shape
-    // ctx.arc(centerX, centerY, radius, begin, end)
-    this.path.arc(this.center[0], this.center[1], this.radius, 0, 2 * Math.PI);
-  }
-
-  draw(ctx) {
-    super.draw(ctx);
+  move(start, end) {
+    this.start = start;
+    this.end = end;
+    this.buildShape();
+    this.anchorStart.move(start);
+    this.anchorEnd.move(end);
   }
 }
 
@@ -62,12 +85,17 @@ export class Circle extends Shape {
     this.radius = radius;
 
     // Build shape
-    // ctx.arc(centerX, centerY, radius, begin, end)
-    this.path.arc(this.center[0], this.center[1], this.radius, 0, 2 * Math.PI);
+    this.buildShape();
 
     // Anchors
     this.anchorCenter = new Anchor(this.center, 10);
     this.anchorRadius = new Anchor([this.center[0] + this.radius, this.center[1]], 10);
+  }
+
+  buildShape() {
+    this.path = new Path2D();
+    // ctx.arc(centerX, centerY, radius, begin, end)
+    this.path.arc(this.center[0], this.center[1], this.radius, 0, 2 * Math.PI);
   }
 
   draw(ctx) {
@@ -77,6 +105,13 @@ export class Circle extends Shape {
       this.anchorCenter.draw(ctx);
       this.anchorRadius.draw(ctx);
     }
+  }
+
+  move(position) {
+    this.center = position;
+    this.buildShape();
+    this.anchorCenter.move(this.center);
+    this.anchorRadius.move([this.center[0] + this.radius, this.center[1]]);
   }
 }
 
@@ -89,13 +124,18 @@ export class Ellipse extends Shape {
     this.rotation = rotation;   // In radians!
 
     // Build shape
-    // ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise)
-    this.path.ellipse(this.center[0], this.center[1], this.radius[0], this.radius[1], this.rotation, 0, 2 * Math.PI, false);
+    this.buildShape();
 
     // Anchors
     this.anchorCenter = new Anchor(this.center, 10);
     this.anchorRadiusH = new Anchor([this.center[0] + this.radius[0] * Math.cos(this.rotation), this.center[1] + this.radius[0] * Math.sin(this.rotation)], 10);
     this.anchorRadiusV = new Anchor([this.center[0] + this.radius[1] * Math.sin(this.rotation), this.center[1] + this.radius[1] * Math.cos(this.rotation)], 10);
+  }
+
+  buildShape() {
+    this.path = new Path2D();
+    // ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise)
+    this.path.ellipse(this.center[0], this.center[1], this.radius[0], this.radius[1], this.rotation, 0, 2 * Math.PI, false);
   }
 
   draw(ctx) {
@@ -106,6 +146,14 @@ export class Ellipse extends Shape {
       this.anchorRadiusH.draw(ctx);
       this.anchorRadiusV.draw(ctx);
     }
+  }
+
+  move(position) {
+    this.center = position;
+    this.buildShape();
+    this.anchorCenter.move(this.center);
+    this.anchorRadiusH.move([this.center[0] + this.radius[0] * Math.cos(this.rotation), this.center[1] + this.radius[0] * Math.sin(this.rotation)]);
+    this.anchorRadiusV.move([this.center[0] + this.radius[1] * Math.sin(this.rotation), this.center[1] + this.radius[1] * Math.cos(this.rotation)]);
   }
 }
 
@@ -118,8 +166,7 @@ export class Rectangle extends Shape {
     this.height = end[1] - start[1];
 
     // Build shape
-    // ctx.rect(startX, startY, width, height)
-    this.path.rect(this.start[0], this.start[1], this.width, this.height);
+    this.buildShape();
 
     // Anchors
     this.anchorPoint1 = new Anchor(this.start, 10);
@@ -128,8 +175,14 @@ export class Rectangle extends Shape {
     this.anchorPoint4 = new Anchor([this.start[0] + this.width, this.start[1] + this.height], 10);
   }
 
+  buildShape() {
+    this.path = new Path2D();
+    // ctx.rect(startX, startY, width, height)
+    this.path.rect(this.start[0], this.start[1], this.width, this.height);
+  }
+
   draw(ctx) {
-    super.draw(ctx);
+    super.draw(ctx);  
 
     if (this.isSelected) {
       this.anchorPoint1.draw(ctx);
@@ -137,6 +190,15 @@ export class Rectangle extends Shape {
       this.anchorPoint3.draw(ctx);
       this.anchorPoint4.draw(ctx);
     }
+  }
+
+  move(position) {
+    this.start = position;
+    this.buildShape();
+    this.anchorPoint1.move(this.start);
+    this.anchorPoint2.move([this.start[0] + this.width, this.start[1]]);
+    this.anchorPoint3.move([this.start[0], this.start[1] + this.height]);
+    this.anchorPoint4.move([this.start[0] + this.width, this.start[1] + this.height]);
   }
 }
 
@@ -149,14 +211,19 @@ export class RoundRectangle extends Shape {
     this.cornerRadii = cornerRadii;
 
     // Build shape
-    // ctx.roundRect(x, y, width, height, radii)
-    this.path.roundRect(this.start[0], this.start[1], this.width, this.height, this.cornerRadii);
+    this.buildShape();
 
     // Anchors
     this.anchorPoint1 = new Anchor(this.start, 10);
     this.anchorPoint2 = new Anchor([this.start[0] + this.width, this.start[1]], 10);
     this.anchorPoint3 = new Anchor([this.start[0], this.start[1] + this.height], 10);
     this.anchorPoint4 = new Anchor([this.start[0] + this.width, this.start[1] + this.height], 10);
+  }
+
+  buildShape() {
+    this.path = new Path2D();
+    // ctx.roundRect(x, y, width, height, radii)
+    this.path.roundRect(this.start[0], this.start[1], this.width, this.height, this.cornerRadii);
   }
 
   draw(ctx) {
@@ -168,6 +235,15 @@ export class RoundRectangle extends Shape {
       this.anchorPoint3.draw(ctx);
       this.anchorPoint4.draw(ctx);
     }
+  }
+
+  move(position) {
+    this.start = position;
+    this.buildShape();
+    this.anchorPoint1.move(this.start);
+    this.anchorPoint2.move([this.start[0] + this.width, this.start[1]]);
+    this.anchorPoint3.move([this.start[0], this.start[1] + this.height]);
+    this.anchorPoint4.move([this.start[0] + this.width, this.start[1] + this.height]);
   }
 }
 
