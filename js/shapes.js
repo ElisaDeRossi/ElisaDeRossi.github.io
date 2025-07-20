@@ -12,7 +12,7 @@ class Shape {
 }
 
 class Anchor extends Shape {
-  constructor(type, center, radius) {
+  constructor(center, radius) {
     super("circle");
 
     this.center = center;
