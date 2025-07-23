@@ -1,10 +1,10 @@
 class Shape {
   constructor(shapeType) {
     this.shapeType = shapeType;
-    this.path = new Path2D();
     this.lineWidth = 1;
     this.isSelected = false;
     this.anchors = [];
+    this.path = new Path2D();
   }
 
   draw(ctx) {
@@ -23,10 +23,28 @@ class Anchor extends Shape {
 
     this.type = type;
     this.center = center;
-    this.radius = 7;
+  }
 
-    // Build shape
-    this.path.arc(center[0], center[1], this.radius, 0, 2 * Math.PI);
+  draw(ctx) {
+    let radius = 7;
+
+    ctx.beginPath();
+
+    switch (this.type) {
+      case 'position':
+        ctx.rect(this.center[0] - (radius+3) / 2, this.center[1] - (radius+3) / 2, radius + 3, radius + 3);
+        break;
+
+      case 'radius':
+        ctx.arc(this.center[0], this.center[1], radius, 0, 2 * Math.PI);
+        break;
+    
+      default: 
+        break;
+    }
+
+    ctx.closePath();
+    ctx.stroke();
   }
 }
 
@@ -39,7 +57,15 @@ export class Line extends Shape {
       new Anchor("position", end)
     ];
 
-    // Build shape
+    this.updatePath();
+  }
+
+  updatePath() {
+    this.path = new Path2D();
+
+    let start = this.anchors[0].center;
+    let end = this.anchors[1].center;
+
     this.path.moveTo(start[0], start[1]);
     this.path.lineTo(end[0], end[1]);
   }
@@ -54,7 +80,15 @@ export class Circle extends Shape {
       new Anchor("radius", [center[0] + radius, center[1]])
     ];
 
-    // Build shape
+    this.updatePath();
+  }
+
+  updatePath() {
+    this.path = new Path2D();
+
+    let center = this.anchors[0].center;
+    let radius = this.anchors[1].center[0] - this.anchors[0].center[0];
+
     this.path.arc(center[0], center[1], radius, 0, 2 * Math.PI);
   }
 }
@@ -63,17 +97,28 @@ export class Ellipse extends Shape {
   constructor(start, end, rotation) {
     super("ellipse");
 
-    this.radius = [Math.abs(end[0] - start[0])/2, Math.abs(end[1] - start[1])/2];
+    let radius = [Math.abs(end[0] - start[0])/2, Math.abs(end[1] - start[1])/2];
     this.rotation = rotation;   // In radians!
 
     this.anchors = [
       new Anchor("position", start), 
-      new Anchor("radius", [start[0] + this.radius[0] * Math.cos(this.rotation), start[1] + this.radius[0] * Math.sin(this.rotation)]),
-      new Anchor("radius", [start[0] + this.radius[1] * Math.sin(this.rotation), start[1] + this.radius[1] * Math.cos(this.rotation)]),
+      new Anchor("radius", [start[0] + radius[0] * Math.cos(this.rotation), start[1] + radius[0] * Math.sin(this.rotation)]),
+      new Anchor("radius", [start[0] + radius[1] * Math.sin(this.rotation), start[1] + radius[1] * Math.cos(this.rotation)]),
     ];
 
-    // Build shape
-    this.path.ellipse(start[0], start[1], this.radius[0], this.radius[1], this.rotation, 0, 2 * Math.PI, false);
+    this.updatePath();
+  }
+
+  updatePath() {
+    this.path = new Path2D();
+
+    let start = this.anchors[0].center;
+    let radius = [
+      (this.anchors[1].center[0] - start[0]) / Math.cos(this.rotation), 
+      (this.anchors[2].center[1] - start[1]) / Math.cos(this.rotation)
+    ];
+
+    this.path.ellipse(start[0], start[1], radius[0], radius[1], this.rotation, 0, 2 * Math.PI, false);
   }
 }
 
@@ -81,18 +126,24 @@ export class Rectangle extends Shape {
   constructor(start, end) {
     super("rectangle");
 
-    this.width = end[0] - start[0];
-    this.height = end[1] - start[1];
-
     this.anchors = [
       new Anchor("position", start), 
-      new Anchor("position", [start[0] + this.width, start[1]]),
-      new Anchor("position", [start[0], start[1] + this.height]),
-      new Anchor("position", [start[0] + this.width, start[1] + this.height]),
+      new Anchor("position", [end[0],   start[1]]),
+      new Anchor("position", [start[0], end[1]]),
+      new Anchor("position", [end[0],   end[1]]),
     ];
 
-    // Build shape
-    this.path.rect(start[0], start[1], this.width, this.height);
+    this.updatePath();
+  }
+
+  updatePath() {
+    this.path = new Path2D();
+
+    let start = this.anchors[0].center;
+    let width = this.anchors[1].center[0] - start[0];
+    let height = this.anchors[2].center[1] - start[1];
+
+    this.path.rect(start[0], start[1], width, height);
   }
 }
 
@@ -100,19 +151,26 @@ export class RoundRectangle extends Shape {
   constructor(start, end, cornerRadii) {
     super("roundRectangle");
 
-    this.width = end[0] - start[0];
-    this.height = end[1] - start[1];
     this.cornerRadii = cornerRadii;
 
     this.anchors = [
       new Anchor("position", start), 
-      new Anchor("position", [start[0] + this.width, start[1]]),
-      new Anchor("position", [start[0], start[1] + this.height]),
-      new Anchor("position", [start[0] + this.width, start[1] + this.height]),
+      new Anchor("position", [end[0],   start[1]]),
+      new Anchor("position", [start[0], end[1]]),
+      new Anchor("position", [end[0],   end[1]]),
     ];
 
-    // Build shape
-    this.path.roundRect(start[0], start[1], this.width, this.height, this.cornerRadii);
+    this.updatePath();
+  }
+
+  updatePath() {
+    this.path = new Path2D();
+
+    let start = this.anchors[0].center;
+    let width = this.anchors[1].center[0] - start[0];
+    let height = this.anchors[2].center[1] - start[1];
+
+    this.path.roundRect(start[0], start[1], width, height, this.cornerRadii);
   }
 }
 

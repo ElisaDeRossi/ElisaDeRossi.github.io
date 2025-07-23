@@ -13,15 +13,25 @@ if (canvas) {
     let shapeList = [];
     let tempShape;
     let isDragging = false;
-    const rect = canvas.getBoundingClientRect();
+    let rect = canvas.getBoundingClientRect();
     let startX, startY;
     let currentX, currentY;
-    let shapeType = document.getElementById('shapeType').elements['shapeType'].value;
+    let shapeElement = document.getElementById('shapeType');
+    let shapeType = shapeElement.elements['shapeType'].value;
 
     let mode = document.getElementById('mode');
+
+    window.onresize = function() {
+      rect = canvas.getBoundingClientRect();
+    };
+
     mode.onchange = (event) => {
       switch (mode.elements['mode'].value) {
         case 'shape':
+
+          shapeElement.style.display = 'block';
+          shapeList.forEach(shape => { shape.isSelected = false; });
+          rect = canvas.getBoundingClientRect();
 
           isDragging = false;
 
@@ -90,13 +100,15 @@ if (canvas) {
                     break;
                 }
             }
-
             isDragging = false;
           };
 
           break;
 
         case 'select':
+
+          shapeElement.style.display = 'none';
+          rect = canvas.getBoundingClientRect();
 
           isDragging = false;
           let selected = false;
@@ -108,7 +120,15 @@ if (canvas) {
 
           // Mouse move event
           canvas.onmousemove = (event) => {
-            if (isDragging) { }
+            if (isDragging) {
+              currentX = event.clientX - rect.left;
+              currentY = event.clientY - rect.top;
+
+              shapeList.forEach(shape => {
+                if (shape.isSelected)
+                  shape.move(ctx, [currentX, currentY]);
+              });
+            }
           };
 
           // Mouse up event
