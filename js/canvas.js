@@ -169,6 +169,17 @@ if (canvas) {
 
             isDragging = false;
           };
+
+          // Keyup event
+          document.onkeydown = (event) => {
+            // Delete shape
+            if (selectedShape != -1 && event.code == 'Delete') {
+              shapeList.splice(selectedShape, 1);
+              selectedShape = -1;
+              selectedAnchor = -1;
+            }
+          };
+
           break;
       }
     };
