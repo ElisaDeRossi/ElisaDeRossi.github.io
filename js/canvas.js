@@ -18,19 +18,25 @@ if (canvas) {
     let currentX, currentY;
     let shapeElement = document.getElementById('shapeType');
     let shapeType = shapeElement.elements['shapeType'].value;
+    let selectedShape = -1;
+    let selectedAnchor = -1;
 
     let mode = document.getElementById('mode');
 
-    window.onresize = function() {
+    // Events
+    window.onresize = function () {
       rect = canvas.getBoundingClientRect();
     };
 
-    mode.onchange = (event) => {
+    mode.onchange = () => {
+      
       switch (mode.elements['mode'].value) {
         case 'shape':
 
           shapeElement.style.display = 'block';
           shapeList.forEach(shape => { shape.isSelected = false; });
+          selectedShape = -1;
+          selectedAnchor = -1;
           rect = canvas.getBoundingClientRect();
 
           isDragging = false;
@@ -111,11 +117,20 @@ if (canvas) {
           rect = canvas.getBoundingClientRect();
 
           isDragging = false;
-          let selected = false;
 
           // Mouse down event
           canvas.onmousedown = (event) => {
+            currentX = event.clientX - rect.left;
+            currentY = event.clientY - rect.top;
+
             isDragging = true;
+
+            selectedAnchor = -1;
+            if (selectedShape != -1) {
+              for (let i = 0; i < shapeList[selectedShape].anchors.length; i++)
+                if (ctx.isPointInPath(shapeList[selectedShape].anchors[i].path, currentX, currentY))
+                  selectedAnchor = i;
+            }
           };
 
           // Mouse move event
@@ -124,38 +139,36 @@ if (canvas) {
               currentX = event.clientX - rect.left;
               currentY = event.clientY - rect.top;
 
-              shapeList.forEach(shape => {
-                if (shape.isSelected)
-                  shape.move(ctx, [currentX, currentY]);
-              });
+              if (selectedShape != -1 && selectedAnchor != -1) {
+                shapeList[selectedShape].anchors[selectedAnchor].updatePath([currentX, currentY]);
+                shapeList[selectedShape].updatePath(selectedAnchor);
+              }
             }
           };
 
           // Mouse up event
           canvas.onmouseup = (event) => {
-            currentX = event.clientX - rect.left;
-            currentY = event.clientY - rect.top;
 
-            selected = false;
-            shapeList.forEach(shape => {
-              ctx.lineWidth = shape.lineWidth + 9;    // To allow some error in the detection
-              const isPointInStroke = ctx.isPointInStroke(shape.path, currentX, currentY);
-              ctx.lineWidth = shape.lineWidth;        // Restore original dimension
+            let isPointInStroke = false;
+            let selected = false;
+            for (let i = 0; i < shapeList.length; i++) {
+              ctx.lineWidth = shapeList[i].lineWidth + 9;    // To allow some error in the detection
+              isPointInStroke = ctx.isPointInStroke(shapeList[i].path, currentX, currentY);
+              ctx.lineWidth = shapeList[i].lineWidth;        // Restore original dimension
               if (isPointInStroke && !selected) {
-                shape.isSelected = true;
-                console.log(shape);
+                shapeList[i].isSelected = true;
+                selectedShape = i;
                 selected = true;
               }
               else
-                shape.isSelected = false;
-            });
+                shapeList[i].isSelected = false;
+            }
+
+            if (!selected)
+              selectedShape = -1;
 
             isDragging = false;
           };
-
-          break;
-
-        default:
           break;
       }
     };
@@ -186,6 +199,8 @@ if (canvas) {
       // Draw temporary shapes
       if (tempShape)
         tempShape.draw(ctx);
+
+      // console.log(selectedShape, selectedAnchor);
 
       requestAnimationFrame(drawEverything);
     }
