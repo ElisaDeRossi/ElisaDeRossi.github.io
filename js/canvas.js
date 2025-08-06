@@ -1,4 +1,4 @@
-import { Line, Circle, Rectangle, RoundRectangle, Ellipse, Image } from './shapes.js';
+import { Line, Circle, Rectangle, Ellipse, Image } from './shapes.js';
 
 var canvas = document.getElementById("myCanvas");
 if (canvas) {
@@ -65,11 +65,11 @@ if (canvas) {
                   break;
 
                 case 'rect':
-                  tempShape = new Rectangle([startX, startY], [currentX, currentY]);
+                  tempShape = new Rectangle([startX, startY], [currentX, currentY], 0);
                   break;
 
                 case 'roundRect':
-                  tempShape = new RoundRectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]);
+                  tempShape = new Rectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]);
                   break;
 
                 default: // default is line
@@ -94,11 +94,11 @@ if (canvas) {
                     break;
 
                   case 'rect':
-                    shapeList.push(new Rectangle([startX, startY], [currentX, currentY]));
+                    shapeList.push(new Rectangle([startX, startY], [currentX, currentY], 0));
                     break;
 
                   case 'roundRect':
-                    shapeList.push(new RoundRectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]));
+                    shapeList.push(new Rectangle([startX, startY], [currentX, currentY], [8, 8, 8, 8]));
                     break;
 
                   default: // default is line
