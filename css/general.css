@@ -160,6 +160,16 @@ header nav #menu-icon {
   gap: 1rem;
   margin: 1rem 0;
 }
+@media screen and (max-width: 1188px) {
+  #content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
 #content-wrapper aside {
   display: flex;
   flex-direction: column;
@@ -175,7 +185,7 @@ header nav #menu-icon {
 }
 @media screen and (max-width: 1188px) {
   #content-wrapper aside {
-    min-width: 1rem;
+    width: 100%;
     align-items: center;
   }
 }
@@ -197,11 +207,6 @@ header nav #menu-icon {
 }
 #content-wrapper aside a p {
   margin: 0;
-}
-@media screen and (max-width: 1188px) {
-  #content-wrapper aside a p {
-    display: none;
-  }
 }
 #content-wrapper main {
   flex-grow: 1;
@@ -235,7 +240,6 @@ header nav #menu-icon {
 @media screen and (max-width: 1188px) {
   #content-wrapper main article figure {
     width: auto;
-    max-height: 100vh;
   }
 }
 #content-wrapper main article figure img {
