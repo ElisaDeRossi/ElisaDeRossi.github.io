@@ -248,6 +248,7 @@ header nav #menu-icon {
 #content-wrapper main article figure figcaption {
   margin: 0.5rem 0 0 0;
   font-size: small;
+  color: #464D4A;
 }
 #content-wrapper main article .img-left {
   float: left;
