@@ -25,10 +25,12 @@ form {
 }
 
 canvas {
-  /*width: 80%;
+  /*
+  width: 80%;
   @media screen and (max-width: $mobile-limit) {
       width: 100%;
-  }*/
+  }
+  */
   margin-top: 20px;
   outline: 2px solid #000;
   background-color: #fff;
