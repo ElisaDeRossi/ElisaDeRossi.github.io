@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- HTMX -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="/css/mixed-css.css">
     <title>Mixed CSS</title>
 </head>
@@ -99,6 +103,12 @@
                     <option>option4</option>
                 </optgroup>
             </select>
+        </div>
+
+        <div id="htmx">
+            <h3>This is an htmx test:</h3>
+            <div id="par">This is a paragraph</div>
+            <button hx-get="/pages/pattern/newdiv.html" hx-target="#par">Change the paragraph</button>
         </div>
     </main>
 

@@ -282,4 +282,26 @@ main {
   padding: 10px;
   background-color: rgb(231, 185, 185);
   border: 1px solid #000;
+}
+
+#htmx {
+  background-color: rgb(195, 128, 226);
+  padding: 10px;
+  margin: 0;
+  border-radius: 8px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#htmx div {
+  margin-bottom: 10px;
+}
+#htmx button {
+  font-family: inherit;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: rgb(231, 185, 220);
+  border: 1px solid #000;
 }/*# sourceMappingURL=mixed-css.css.map */
