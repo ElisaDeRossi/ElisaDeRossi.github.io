@@ -1,13 +1,15 @@
-class Shape {
-  constructor(shapeType) {
+export class Shape {
+  shapeType : string;
+  lineWidth : number = 1;
+  isSelected : boolean = false; 
+  anchors : Anchor[] = [];
+  path : Path2D = new Path2D();
+
+  constructor(shapeType : string) {
     this.shapeType = shapeType;
-    this.lineWidth = 1;
-    this.isSelected = false;
-    this.anchors = [];
-    this.path = new Path2D();
   }
 
-  draw(ctx) {
+  draw(ctx : CanvasRenderingContext2D) {
     ctx.stroke(this.path);
 
     if (this.isSelected)
@@ -15,10 +17,15 @@ class Shape {
         anchor.draw(ctx);
       });
   }
+
+  updatePath(param ?: any) : void {}
 }
 
-class Anchor extends Shape {
-  constructor(type, center) {
+class Anchor extends Shape{
+  type : string;
+  center : [number, number];
+
+  constructor(type : string, center : [number, number]) {
     super("anchor");
 
     this.type = type;
@@ -27,7 +34,7 @@ class Anchor extends Shape {
     this.updatePath(center);
   }
 
-  updatePath(center) {
+  updatePath(center : [number, number]) {
 
     let radius = 7;
     this.path = new Path2D();
@@ -47,13 +54,13 @@ class Anchor extends Shape {
     }
   }
 
-  draw(ctx) {
+  draw(ctx : CanvasRenderingContext2D) {
     super.draw(ctx);
   }
 }
 
 export class Line extends Shape {
-  constructor(start, end) {
+  constructor(start : [number, number], end : [number, number]) {
     super("line");
 
     this.anchors = [
@@ -64,7 +71,7 @@ export class Line extends Shape {
     this.updatePath();
   }
 
-  updatePath(anchorIndex) {
+  updatePath(anchorIndex ?: number) {
     this.path = new Path2D();
 
     let start = this.anchors[0].center;
@@ -74,13 +81,16 @@ export class Line extends Shape {
     this.path.lineTo(end[0], end[1]);
   }
 
-  draw(ctx) {
+  draw(ctx : CanvasRenderingContext2D) {
     super.draw(ctx);
   }
 }
 
 export class Circle extends Shape {
-  constructor(center, radius) {
+
+  radius : number;
+
+  constructor(center : [number, number], radius : number) {
     super("circle");
 
     this.radius = radius;
@@ -93,7 +103,7 @@ export class Circle extends Shape {
     this.updatePath();
   }
 
-  updatePath(anchorIndex) {
+  updatePath(anchorIndex ?: number) {
     this.path = new Path2D();
 
     let center = this.anchors[0].center;
@@ -116,7 +126,11 @@ export class Circle extends Shape {
 }
 
 export class Ellipse extends Shape {
-  constructor(start, end, rotation) {
+
+  radius : [number, number];
+  rotation : number;
+
+  constructor(start : [number, number], end : [number, number], rotation : number) {
     super("ellipse");
 
     this.radius = [Math.abs(end[0] - start[0]) / 2, Math.abs(end[1] - start[1]) / 2];
@@ -131,10 +145,10 @@ export class Ellipse extends Shape {
     this.updatePath();
   }
 
-  updatePath(anchorIndex) {
+  updatePath(anchorIndex ?: number) {
     this.path = new Path2D();
 
-    let center = this.anchors[0].center;
+    let center : [number, number] = this.anchors[0].center;
 
     switch (anchorIndex) {
       // Se sposto il centro sposto anche i raggi
@@ -164,7 +178,10 @@ export class Ellipse extends Shape {
 }
 
 export class Rectangle extends Shape {
-  constructor(start, end, cornerRadii) {
+
+  cornerRadii : number[]|number;
+
+  constructor(start : [number, number], end : [number, number], cornerRadii : number[]|number) {
     super("rectangle");
 
     this.cornerRadii = cornerRadii;
@@ -180,7 +197,7 @@ export class Rectangle extends Shape {
     this.updatePath();
   }
 
-  updatePath(anchorIndex) {
+  updatePath(anchorIndex ?: number) {
     this.path = new Path2D();
 
     if (anchorIndex != null) {
@@ -214,10 +231,10 @@ export class Rectangle extends Shape {
 
         // Se cambio il centro, cambio anche gli angoli
         case 4:
-          let width = this.anchors[1].center[0] - this.anchors[0].center[0];
-          let height = this.anchors[2].center[1] - this.anchors[0].center[1];
-          let start = [anchorPosition[0] - width / 2, anchorPosition[1] - height / 2];
-          let end = [anchorPosition[0] + width / 2, anchorPosition[1] + height / 2];
+          let width : number = this.anchors[1].center[0] - this.anchors[0].center[0];
+          let height : number = this.anchors[2].center[1] - this.anchors[0].center[1];
+          let start : [number, number] = [anchorPosition[0] - width / 2, anchorPosition[1] - height / 2];
+          let end : [number, number] = [anchorPosition[0] + width / 2, anchorPosition[1] + height / 2];
           this.anchors[0].updatePath(start);
           this.anchors[1].updatePath([end[0], start[1]]);
           this.anchors[2].updatePath([start[0], end[1]]);
@@ -226,47 +243,38 @@ export class Rectangle extends Shape {
       }
 
       if (anchorIndex != 4) {
-        let end = this.anchors[3].center;
-        let start = this.anchors[0].center;
+        let end : [number, number] = this.anchors[3].center;
+        let start : [number, number] = this.anchors[0].center;
         this.anchors[4].updatePath([start[0] + (end[0] - start[0]) / 2, start[1] + (end[1] - start[1]) / 2]);
       }
     }
 
-    let start = this.anchors[0].center;
-    let width = this.anchors[1].center[0] - start[0];
-    let height = this.anchors[2].center[1] - start[1];
+    let start : [number, number] = this.anchors[0].center;
+    let width : number = this.anchors[1].center[0] - start[0];
+    let height : number = this.anchors[2].center[1] - start[1];
 
     this.path.roundRect(start[0], start[1], width, height, this.cornerRadii);
   }
 }
 
 export class Image {
-  constructor(HTMLelement, position, dimensions) {
+
+  HTMLelement : HTMLImageElement;
+  position : [number, number];
+  dimensions : [number, number] = [-1,-1];
+
+  constructor(HTMLelement : HTMLImageElement, position : [number, number], dimensions : [number, number]) {
     this.HTMLelement = HTMLelement;
     this.position = position;
-    this.setDimensions(dimensions);
+    this.dimensions = dimensions;
   }
 
-  setSource(path) {
+  setSource(path : string) {
     this.HTMLelement.src = path;
-    this.setDimensions([500, 500]);
+    this.dimensions = [500,500];
   }
 
-  setDimensions(dimensions) {
-
-    // TODO c'è qualcosa che non va
-    if (dimensions[0] == "auto") {
-      this.dimensions = [dimensions[1] * this.HTMLelement.naturalWidth / this.HTMLelement.naturalHeight, dimensions[1]];
-    }
-    else if (dimensions[1] == "auto") {
-      this.dimensions = [dimensions[0], dimensions[0] * this.HTMLelement.naturalHeight / this.HTMLelement.naturalWidth];
-    }
-    else {
-      this.dimensions = dimensions;
-    }
-  }
-
-  draw(ctx) {
+  draw(ctx : CanvasRenderingContext2D) {
     ctx.drawImage(this.HTMLelement, this.position[0], this.position[1], this.dimensions[0], this.dimensions[1]);
   }
 

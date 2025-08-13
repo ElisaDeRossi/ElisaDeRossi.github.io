@@ -1,36 +1,44 @@
-import { Line, Circle, Rectangle, Ellipse, Image } from './shapes.js';
+import { Shape, Line, Circle, Rectangle, Ellipse /*, Image*/ } from './shapes.js';
 
-var canvas = document.getElementById("myCanvas");
+function getCheckedFormElement(DOMelement: HTMLFormElement): string {
+  for (let index = 0; index < DOMelement.elements.length; index++) {
+    let element: HTMLInputElement = DOMelement.elements[index] as HTMLInputElement;
+    if (element.checked)
+      return element.value;
+  }
+  return '';
+}
+
+let canvas: HTMLCanvasElement | null = document.getElementById("myCanvas") as HTMLCanvasElement;
 if (canvas) {
-  var ctx = canvas.getContext("2d");
+  let ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
   if (ctx) {
 
-    var requestAnimationFrame = window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.msRequestAnimationFrame;
+    var requestAnimationFrame = window.requestAnimationFrame;
 
-    let shapeList = [];
-    let tempShape;
+    let shapeList: Shape[] = [];
+    let tempShape: Shape | null;
     let isDragging = false;
     let rect = canvas.getBoundingClientRect();
-    let startX, startY;
-    let currentX, currentY;
-    let shapeElement = document.getElementById('shapeType');
-    let shapeType = shapeElement.elements['shapeType'].value;
-    let selectedShape = -1;
-    let selectedAnchor = -1;
+    let startX: number, startY: number;
+    let currentX: number, currentY: number;
+    let shapeElement: HTMLFormElement | null = document.getElementById('shapeType') as HTMLFormElement;
+    let shapeType: string | null = shapeElement ? getCheckedFormElement(shapeElement) : null;
+    let selectedShape: number = -1;
+    let selectedAnchor: number = -1;
 
-    let mode = document.getElementById('mode');
+    let modeElement: HTMLFormElement | null = document.getElementById('mode') as HTMLFormElement;
 
     // Events
     window.onresize = function () {
       rect = canvas.getBoundingClientRect();
     };
 
-    mode.onchange = () => {
-      
-      switch (mode.elements['mode'].value) {
+    modeElement.onchange = () => {
+
+      let mode: string = modeElement ? getCheckedFormElement(modeElement) : 'shape';
+
+      switch (mode) {
         case 'shape':
 
           shapeElement.style.display = 'block';
@@ -46,7 +54,7 @@ if (canvas) {
             isDragging = true;
             startX = event.clientX - rect.left;
             startY = event.clientY - rect.top;
-            shapeType = document.getElementById('shapeType').elements['shapeType'].value;
+            shapeType = getCheckedFormElement(shapeElement);
           };
 
           // Mouse move event
@@ -80,7 +88,7 @@ if (canvas) {
           };
 
           // Mouse up event
-          canvas.onmouseup = (event) => {
+          canvas.onmouseup = () => {
             if (tempShape) {
               tempShape = null;
               if (startX !== currentX && startY !== currentY)
@@ -147,7 +155,7 @@ if (canvas) {
           };
 
           // Mouse up event
-          canvas.onmouseup = (event) => {
+          canvas.onmouseup = () => {
 
             let isPointInStroke = false;
             let selected = false;
@@ -195,21 +203,24 @@ if (canvas) {
     */
 
     function drawEverything() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw background image
-      // if (image.HTMLelement.getAttribute('src') != "") {
-      // image.draw(ctx);
-      // }
+      if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw shapes
-      for (var i = 0; i < shapeList.length; i++) {
-        shapeList[i].draw(ctx);
+        // Draw background image
+        // if (image.HTMLelement.getAttribute('src') != "") {
+        // image.draw(ctx);
+        // }
+
+        // Draw shapes
+        for (var i = 0; i < shapeList.length; i++) {
+          shapeList[i].draw(ctx);
+        }
+
+        // Draw temporary shapes
+        if (tempShape)
+          tempShape.draw(ctx);
       }
-
-      // Draw temporary shapes
-      if (tempShape)
-        tempShape.draw(ctx);
 
       // console.log(selectedShape, selectedAnchor);
 
