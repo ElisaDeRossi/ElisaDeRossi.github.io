@@ -342,4 +342,8 @@ hr {
 }
 #to-top a svg {
   fill: #464D4A;
+}
+
+.useless {
+  color: #bbbbbb !important;
 }/*# sourceMappingURL=general.css.map */

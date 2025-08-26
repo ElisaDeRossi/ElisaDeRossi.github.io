@@ -3,6 +3,7 @@ $primary-color: #C3FFF6;
 $secondary-color: #94FCE7;
 $accent-color: #34EBB1;
 $text-color: #464D4A;
+$useless-text-color: #bbbbbb;
 $font: Verdana, sans-serif;
 
 $mobile-limit: 1188px;
@@ -343,4 +344,10 @@ hr {
             fill: $text-color;
         }
     }
+}
+
+// Change color for useless text
+
+.useless {
+    color: $useless-text-color !important;
 }
