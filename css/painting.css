@@ -20,9 +20,9 @@ body {
 }
 
 #painting {
+  aspect-ratio: 16/9;
   margin-top: 20px;
   width: 60%;
-  height: 60%;
   background-color: aqua;
 }
 #painting #frame {
@@ -86,6 +86,7 @@ body {
   background-color: rgb(155, 155, 155);
 }
 #painting #canvas .orange {
+  aspect-ratio: 1/1;
   position: absolute;
   border-radius: 50%;
   background-color: #da7809;
@@ -116,7 +117,6 @@ body {
   border-right: 16px solid transparent;
 }
 #painting #canvas #orange-1 {
-  width: 22.82%;
   height: 48.83%;
   top: 18%;
   left: 29%;
@@ -126,7 +126,6 @@ body {
   z-index: 999;
 }
 #painting #canvas #orange-2 {
-  width: 24.8%;
   height: 53.08%;
   top: 15%;
   left: 50%;
@@ -136,7 +135,6 @@ body {
   z-index: 999;
 }
 #painting #canvas #orange-3 {
-  width: 19.84%;
   height: 42.46%;
   top: 35%;
   left: 37%;

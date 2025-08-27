@@ -32,9 +32,10 @@ body {
 // FRAME
 
 #painting {
+    aspect-ratio: 16 / 9;
     margin-top: 20px;
     width: 60%;
-    height: 60%;
+    // height: 60%;
     background-color: aqua;
 
     #frame {
@@ -110,6 +111,7 @@ body {
         }  
         
         .orange {
+            aspect-ratio: 1 / 1;
             position: absolute;
             border-radius: 50%;
             background-color: #da7809;
@@ -147,7 +149,6 @@ body {
         }
         
         #orange-1 {
-            width: 22.82%;
             height: 48.83%;
             top: 18%;
             left: 29%;
@@ -156,7 +157,6 @@ body {
         }
 
         #orange-2 {
-            width: 24.8%;
             height: 53.08%;
             top: 15%;
             left: 50%;
@@ -165,7 +165,6 @@ body {
         }
 
         #orange-3 {
-            width: 19.84%;
             height: 42.46%;
             top: 35%;
             left: 37%;

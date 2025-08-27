@@ -4,6 +4,12 @@ $keys-color-up: #CBCBCB;
 $animation-delay: 2s;
 $click-time: 0.5s;
 
+$mobile-limit: 1188px;
+
+* {
+    box-sizing: border-box;
+}
+
 html {
     margin: 0;
     height: 100%;
@@ -31,11 +37,15 @@ body {
 // SCREEN
 
 #screen {
+    aspect-ratio: 16 / 9;
     width: 40%;
-    height: 40vh;
+    @media screen and (max-width: $mobile-limit) {
+        width: 100%;
+    }
+
     margin-top: 20px;
     background-color: #1a1a1a;
-    border: 40px solid $keys-color-up;
+    border: 20px solid $keys-color-up;
 
     display: flex;
     flex-direction: row;
@@ -100,6 +110,7 @@ body {
 // KEYBOARD
 
 #keyboard {
+    width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -111,6 +122,7 @@ body {
 }
 
 .keyboard-row {
+    width: 100%;
     margin: 0;
     display: flex;
     flex-direction: row;
@@ -131,6 +143,7 @@ body {
 // KEY
 
 .key {
+    width: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -146,12 +159,14 @@ body {
 }
 
 .front {
-    width: 66px;
+    width: calc(100% + 2px);
+    aspect-ratio: 1 / 1;
     background-color: $keys-color-front;
 }
 
 .up {
-    width: 64px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     background-color: $keys-color-up;
     transform: 
         perspective(900px)

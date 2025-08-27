@@ -17,6 +17,10 @@ $mobile-limit: 1188px;
     gap: $gap
 }
 
+* {
+    box-sizing: border-box;
+}
+
 html {
     margin: 0;
     padding: 0;
@@ -182,7 +186,7 @@ header {
 
     aside {
         @include flex(column, center, flex-start, nowrap, 1rem);
-        min-width: 9rem;
+        min-width: 12rem;
 
         @media screen and (max-width: $mobile-limit) {
             width: 100%;
@@ -299,6 +303,9 @@ footer {
     #footer-links {
         max-width: 100%;
         @include flex(row, center, flex-start, nowrap, 0.5rem);
+        @media screen and (max-width: $mobile-limit) {
+            @include flex(column, flex-start, center, nowrap, 0.5rem);
+        }
 
         div {
             @include flex(column, flex-start, space-evenly, nowrap);

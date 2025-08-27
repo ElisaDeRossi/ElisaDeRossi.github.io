@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   margin: 0;
   padding: 0;
@@ -177,7 +181,7 @@ header nav #menu-icon {
   align-items: flex-start;
   justify-content: center;
   gap: 1rem;
-  min-width: 9rem;
+  min-width: 12rem;
   -o-object-fit: contain;
      object-fit: contain;
   background-color: #C3FFF6;
@@ -295,6 +299,16 @@ footer #footer-links {
   align-items: flex-start;
   justify-content: center;
   gap: 0.5rem;
+}
+@media screen and (max-width: 1188px) {
+  footer #footer-links {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
 }
 footer #footer-links div {
   display: flex;
