@@ -18,4 +18,9 @@ body {
 #description {
   font-weight: 900;
   text-align: center;
+}
+
+video-player {
+  margin-top: 8px;
+  width: 70%;
 }/*# sourceMappingURL=video-player.css.map */
