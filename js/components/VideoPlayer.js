@@ -1,10 +1,47 @@
 // Define component class
 class VideoPlayer extends HTMLElement {
 
+    constructor() {
+        super();
+    }
+
+    updateInputRange(element, value) {
+        element.style.setProperty('--value', `${(value - element.min) / (element.max - element.min) * 100}%`);
+    }
+
+    resetProgress() {
+        const svgPlay = this.shadowRoot.getElementById("svg-play");
+        const svgPause = this.shadowRoot.getElementById("svg-pause");
+        const progressRange = this.shadowRoot.getElementById("progress-range");
+        const currentTime = this.shadowRoot.getElementById("current-time");
+
+        svgPlay.style.display = "block";
+        svgPause.style.display = "none";
+        progressRange.value = 0;
+        currentTime.innerHTML = this.timeToHHMMSS(0);
+        this.updateInputRange(progressRange, 0);
+    }
+
+    timeToHHMMSS(time) {
+        let hours = Math.floor(time / 3600);
+        time = time - hours * 3600;
+        let minutes = Math.floor(time / 60);
+        let seconds = Math.round(time - minutes * 60);
+
+        if (minutes < 10) minutes = `0${minutes}`;
+        if (seconds < 10) seconds = `0${seconds}`;
+
+        if (hours === 0)
+            return `${minutes}:${seconds}`;
+
+        if (hours < 10) hours = `0${hours}`;
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
     connectedCallback() {
         const shadow = this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-        <link href="/css/video-player-template.css" rel="stylesheet" type="text/css">
+        <link href="/css/video-player-component.css" rel="stylesheet" type="text/css">
         <div id="video-container">
             <div id="ui">
                 <div id="progress">
@@ -31,7 +68,7 @@ class VideoPlayer extends HTMLElement {
                 </div>
             </div>
             <video id="video" controls>
-                <source src="" type="video/mp4" />
+                <source src=""/>
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -61,57 +98,37 @@ class VideoPlayer extends HTMLElement {
         const currentTime = this.shadowRoot.getElementById("current-time");
 
         let timer = null;
-        function clearTimer() {
+        const clearTimer = () => {
             ui.style.display = "block";
-            template.style.cursor = "";
+            container.style.cursor = "";
             if (timer)
                 clearTimeout(timer);
         }
         ui.addEventListener('mouseover', clearTimer);
 
-        function setTimer() {
+        const setTimer = () => {
             clearTimer();
             timer = setTimeout(() => {
                 ui.style.display = "none";
-                template.style.cursor = "none";
+                container.style.cursor = "none";
             }, 3000);
         }
         video.addEventListener('mousemove', setTimer);
         ui.addEventListener('mouseleave', setTimer);
 
-        function updateInputRange(element, value) {
-            element.style.setProperty('--value', `${(value - element.min) / (element.max - element.min) * 100}%`);
-        }
-
-        function timeToHHMMSS(time) {
-            let hours = Math.floor(time / 3600);
-            time = time - hours * 3600;
-            let minutes = Math.floor(time / 60);
-            let seconds = Math.round(time - minutes * 60);
-
-            if (minutes < 10) minutes = `0${minutes}`;
-            if (seconds < 10) seconds = `0${seconds}`;
-
-            if (hours === 0)
-                return `${minutes}:${seconds}`;
-
-            if (hours < 10) hours = `0${hours}`;
-            return `${hours}:${minutes}:${seconds}`;
-        }
-
-        function setProgressSetVolume() {
+        const setProgressSetVolume = () => {
             video.volume = volumeRange.value;
-            updateInputRange(volumeRange, video.volume);
+            this.updateInputRange(volumeRange, video.volume);
             progressRange.setAttribute("max", video.duration);
-            updateInputRange(progressRange, 0);
-            totalTime.innerHTML = timeToHHMMSS(video.duration);
-            currentTime.innerHTML = timeToHHMMSS(0);
+            this.updateInputRange(progressRange, 0);
+            totalTime.innerHTML = this.timeToHHMMSS(video.duration);
+            currentTime.innerHTML = this.timeToHHMMSS(0);
 
             setTimer();
         }
         video.addEventListener('loadedmetadata', setProgressSetVolume);
 
-        function playPause() {
+        const playPause = () => {
             if (video.paused || video.ended) {
                 video.play();
                 svgPlay.style.display = "none";
@@ -126,7 +143,7 @@ class VideoPlayer extends HTMLElement {
         video.addEventListener('click', playPause);
 
         let lastVolumeLevel = 1;
-        function muteVideo() {
+        const muteVideo = () => {
             if (video.volume > 0) {
                 lastVolumeLevel = video.volume;
                 video.volume = 0;
@@ -140,11 +157,11 @@ class VideoPlayer extends HTMLElement {
                 svgMute.style.display = "none";
             }
 
-            updateInputRange(volumeRange, video.volume);
+            this.updateInputRange(volumeRange, video.volume);
         }
         volumeBtn.addEventListener('click', muteVideo);
 
-        function changeVolume() {
+        const changeVolume = () => {
             video.volume = volumeRange.value;
 
             if (video.volume === 0) {
@@ -155,34 +172,27 @@ class VideoPlayer extends HTMLElement {
                 svgMute.style.display = "none";
             }
 
-            updateInputRange(volumeRange, video.volume);
+            this.updateInputRange(volumeRange, video.volume);
         }
         volumeRange.addEventListener('change', changeVolume);
 
-        function resetProgress() {
-            svgPlay.style.display = "block";
-            svgPause.style.display = "none";
-            progressRange.value = 0;
-            currentTime.innerHTML = timeToHHMMSS(0);
-            updateInputRange(progressRange, 0);
-        }
-        video.addEventListener('ended', resetProgress);
+        video.addEventListener('ended', this.resetProgress);
 
-        function changeProgress() {
+        const changeProgress = () => {
             video.currentTime = progressRange.value;
-            updateInputRange(progressRange, progressRange.value);
+            this.updateInputRange(progressRange, progressRange.value);
         }
         progressRange.addEventListener('change', changeProgress);
 
-        function updateTime() {
+        const updateTime = () => {
             progressRange.value = video.currentTime;
-            currentTime.innerHTML = timeToHHMMSS(video.currentTime);
-            updateInputRange(progressRange, video.currentTime);
+            currentTime.innerHTML = this.timeToHHMMSS(video.currentTime);
+            this.updateInputRange(progressRange, video.currentTime);
         }
         video.addEventListener('timeupdate', updateTime);
 
         // Fullscreen events
-        function toggleFullscreen() {
+        const toggleFullscreen = () => {
             if ( // If is in fullscreen
                 (document.fullscreenElement && document.fullscreenElement !== null) ||
                 (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
@@ -216,7 +226,7 @@ class VideoPlayer extends HTMLElement {
         }
         fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-        function exitHandler() {
+        const exitHandler = () => {
             if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
                 svgFullscreen.style.display = "block";
                 svgUnfullscreen.style.display = "none";
@@ -226,6 +236,24 @@ class VideoPlayer extends HTMLElement {
         document.addEventListener('webkitfullscreenchange', exitHandler);
         document.addEventListener('mozfullscreenchange', exitHandler);
         document.addEventListener('MSFullscreenChange', exitHandler);
+    }
+
+    static get observedAttributes() {
+        return ['src'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'src':
+                if (this.shadowRoot) {
+                    const video = this.shadowRoot.getElementById("video");
+                    const sources = video.getElementsByTagName('source');
+                    sources[0].src = newValue;
+                    video.load();
+                    this.resetProgress();
+                }
+                break;
+        }
     }
 }
 // Create component

@@ -7,7 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/video-player.css">
     <title>Video Player</title>
-    
+
     <!-- Define web component -->
     <script src="/js/components/VideoPlayer.js"></script>
 </head>
@@ -19,6 +19,20 @@
 
     <!-- Use web component -->
     <video-player src="/videos/video.mp4"></video-player>
+
+    <select onchange="changeVideo()">
+        <option value="video.mp4">video 1</option>
+        <option value="video2.mp4">video 2</option>
+    </select>
+
+    <script>
+        function changeVideo() {
+            const newSrc = document.getElementsByTagName("select")[0].value;
+            const videoPlayer = document.getElementsByTagName("video-player")[0];
+            const source = videoPlayer.getElementsByTagName("source")[0];
+            videoPlayer.setAttribute('src', `/videos/${newSrc}`);
+        }
+    </script>
 </body>
 
 </html>
