@@ -67,7 +67,7 @@ class VideoPlayer extends HTMLElement {
                     </button>
                 </div>
             </div>
-            <video id="video" controls>
+            <video id="video" preload="auto" controls>
                 <source src=""/>
                 Your browser does not support the video tag.
             </video>
