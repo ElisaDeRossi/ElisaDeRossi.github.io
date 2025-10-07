@@ -67,7 +67,7 @@ class VideoPlayer extends HTMLElement {
                     </button>
                 </div>
             </div>
-            <video id="video" preload="auto" controls>
+            <video id="video" preload="auto" poster="" controls>
                 <source src=""/>
                 Your browser does not support the video tag.
             </video>
@@ -239,7 +239,7 @@ class VideoPlayer extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['src'];
+        return ['src', 'poster'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -251,6 +251,12 @@ class VideoPlayer extends HTMLElement {
                     sources[0].src = newValue;
                     video.load();
                     this.resetProgress();
+                }
+                break;
+            case 'poster':
+                if (this.shadowRoot) {
+                    const video = this.shadowRoot.getElementById("video");
+                    video.poster = newValue;
                 }
                 break;
         }
