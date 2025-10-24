@@ -174,7 +174,7 @@ class VideoPlayer extends HTMLElement {
 
             this.updateInputRange(volumeRange, video.volume);
         }
-        volumeRange.addEventListener('change', changeVolume);
+        volumeRange.addEventListener('input', changeVolume);
 
         video.addEventListener('ended', this.resetProgress);
 
@@ -182,12 +182,12 @@ class VideoPlayer extends HTMLElement {
             video.currentTime = progressRange.value;
             this.updateInputRange(progressRange, progressRange.value);
         }
-        progressRange.addEventListener('change', changeProgress);
+        progressRange.addEventListener('input', changeProgress);
 
         const updateTime = () => {
             progressRange.value = video.currentTime;
-            currentTime.innerHTML = this.timeToHHMMSS(video.currentTime);
             this.updateInputRange(progressRange, video.currentTime);
+            currentTime.innerHTML = this.timeToHHMMSS(video.currentTime);
         }
         video.addEventListener('timeupdate', updateTime);
 
