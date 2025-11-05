@@ -1,3 +1,5 @@
+$background-color: #F2FFFE;
+
 // Golden palette
 $golden-0: #fad643;
 $golden-1: #edc531;
@@ -8,7 +10,7 @@ $golden-4: #a47e1b;
 html {
     margin: 0;
     height: 100%;
-    background: radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    background: $background-color;
 }
 
 body {
