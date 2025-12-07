@@ -208,6 +208,11 @@ header nav #menu-icon {
   width: 24px;
   height: 24px;
   flex: 0 0 auto;
+  transition: transform 0.3s ease-out;
+}
+#content-wrapper aside a:not(.useless):hover svg {
+  width: 1.5rem;
+  transform: rotate(360deg);
 }
 #content-wrapper aside a p {
   margin: 0;
@@ -360,4 +365,9 @@ hr {
 
 .useless {
   color: #bbbbbb !important;
+  pointer-events: none;
+  cursor: default;
+}
+.useless svg {
+  fill: #bbbbbb !important;
 }/*# sourceMappingURL=general.css.map */

@@ -207,6 +207,12 @@ header {
                 width: 24px;
                 height: 24px;
                 flex: 0 0 auto;
+                transition: transform 0.3s ease-out;
+            }
+
+            &:not(.useless):hover svg {
+                width: 1.5rem;
+                transform: rotate(360deg);
             }
 
             p {
@@ -357,4 +363,10 @@ hr {
 
 .useless {
     color: $useless-text-color !important;
+    pointer-events: none;
+    cursor: default;
+
+    svg {
+        fill: $useless-text-color !important;
+    }
 }
